@@ -26,10 +26,6 @@ function Dropzone(props) {
   const [files, setFiles] = useState([]);
   const [mediaAttributes, setMediaAttributes] = useState([]);
 
-
-  
- 
-
   const handleAttributesChange = (name, value) => {
     setMediaAttributes((prevState) => ({
       ...prevState,
@@ -59,17 +55,20 @@ function Dropzone(props) {
         // get width and height of preview
         const newFile = acceptedFiles[0];
         const newInfo = getInfo(newFile).then((result) => {
-          console.log("duration = ", result.media.track[1].Duration)
+          const extArray = acceptedFiles[0].path.split(".")
+          const ext = extArray[1]
+          handleAttributesChange("Extension", ext)
+          handleAttributesChange("FileType", acceptedFiles[0].type)
           handleAttributesChange("Duration", result.media.track[1].Duration)
-          handleAttributesChange("FileSize", result.media.track[0].FileSize)
-          handleAttributesChange("Format",result.media.track[0].Format )
-          handleAttributesChange("Width",result.media.track[1].Width )
+          handleAttributesChange("FileSize", `${result.media.track[0].FileSize/1000} kb`)
+          handleAttributesChange("Format", result.media.track[0].Format)
+          handleAttributesChange("Width", result.media.track[1].Width)
           handleAttributesChange("Height", result.media.track[1].Height)
           handleAttributesChange("FPS", result.media.track[0].FrameRate)
           handleAttributesChange("Codec", result.media.track[1].CodecID)
           handleAttributesChange("AspectRatio", result.media.track[1].DisplayAspectRatio)
           handleAttributesChange("Format", result.media.track[1].Format)
-         
+
         })
 
       },
@@ -115,46 +114,54 @@ function Dropzone(props) {
         </div>
         <div className="droppedImageHolder">{videoPreview}</div>
       </div>
-    
+
 
       <table className="resultsTable">
         <tbody>
-        <tr>
-          <td className='tableLabel'>Width</td>
-          <td>{mediaAttributes.Width}</td>
-        </tr>
-        <tr>
-          <td className='tableLabel'>Height</td>
-          <td>{mediaAttributes.Height}</td>
-        </tr>
-        <tr>
-          <td className='tableLabel'>FileSize</td>
-          <td>{mediaAttributes.FileSize}</td>
-        </tr>
-        <tr>
-          <td className='tableLabel'>Format</td>
-          <td>{mediaAttributes.Format}</td>
-        </tr>
-        <tr>
-          <td className='tableLabel'>Duration</td>
-          <td>{mediaAttributes.Duration}</td>
-        </tr>
-        <tr>
-          <td className='tableLabel'>Codec</td>
-          <td>{mediaAttributes.Codec}</td>
-        </tr>
-        <tr>
-          <td className='tableLabel'>Aspect Ratio</td>
-          <td>{mediaAttributes.AspectRatio}</td>
-        </tr>
-        <tr >
-          <td className='tableLabel'>Format</td>
-          <td>{mediaAttributes.Format}</td>
-        </tr>
-        <tr>
-        <td className='tableLabel'>Frame Rate</td>
-        <td>{mediaAttributes.FPS}</td>
-      </tr>
+          <tr>
+            <td className='tableLabel'>Width</td>
+            <td>{mediaAttributes.Width}</td>
+          </tr>
+          <tr>
+            <td className='tableLabel'>Height</td>
+            <td>{mediaAttributes.Height}</td>
+          </tr>
+          <tr>
+            <td className='tableLabel'>FileSize</td>
+            <td>{mediaAttributes.FileSize}</td>
+          </tr>
+          <tr>
+            <td className='tableLabel'>Format</td>
+            <td>{mediaAttributes.Format}</td>
+          </tr>
+          <tr>
+            <td className='tableLabel'>Duration</td>
+            <td>{mediaAttributes.Duration}</td>
+          </tr>
+          <tr>
+            <td className='tableLabel'>Codec</td>
+            <td>{mediaAttributes.Codec}</td>
+          </tr>
+          <tr>
+            <td className='tableLabel'>Aspect Ratio</td>
+            <td>{mediaAttributes.AspectRatio}</td>
+          </tr>
+          <tr >
+            <td className='tableLabel'>Format</td>
+            <td>{mediaAttributes.Format}</td>
+          </tr>
+          <tr>
+            <td className='tableLabel'>Frame Rate</td>
+            <td>{mediaAttributes.FPS}</td>
+          </tr>
+          <tr>
+            <td className='tableLabel'>Extension</td>
+            <td>{mediaAttributes.Extension}</td>
+          </tr>
+          <tr>
+            <td className='tableLabel'>File Type</td>
+            <td>{mediaAttributes.FileType}</td>
+          </tr>
         </tbody>
 
       </table>
