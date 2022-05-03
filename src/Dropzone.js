@@ -41,9 +41,9 @@ function Dropzone(props) {
     useDropzone({
       maxFiles: 1,
       accept: {
-        'image/jpeg': [],
-        'image/png': [],
-        'image/svg+xml': [],
+        //'image/jpeg': [],
+        //'image/png': [],
+        //'image/svg+xml': [],
         'video/mp4': []
       },
 
