@@ -24,6 +24,7 @@ const rejectStyle = {
 
 function Dropzone(props) {
   const [files, setFiles] = useState([]);
+  const [isVideo, setIsVideo] = useState([false]);
   const [mediaAttributes, setMediaAttributes] = useState([]);
 
   const handleAttributesChange = (name, value) => {
@@ -37,9 +38,9 @@ function Dropzone(props) {
     useDropzone({
       maxFiles: 1,
       accept: {
-        //'image/jpeg': [],
-        //'image/png': [],
-        //'image/svg+xml': [],
+        'image/jpeg': [],
+        'image/png': [],
+        'image/svg+xml': [],
         'video/mp4': []
       },
 
@@ -57,6 +58,7 @@ function Dropzone(props) {
         const newInfo = getInfo(newFile).then((result) => {
           const extArray = acceptedFiles[0].path.split(".")
           const ext = extArray[1]
+          setIsVideo(ext==="mp4")
           handleAttributesChange("Extension", ext)
           handleAttributesChange("FileType", acceptedFiles[0].type)
           handleAttributesChange("Duration", result.media.track[1].Duration)
@@ -112,7 +114,7 @@ function Dropzone(props) {
         <div {...getRootProps({ style })} className="dropZone">
           <input {...getInputProps()} />
         </div>
-        <div className="droppedImageHolder">{videoPreview}</div>
+        <div className="droppedImageHolder">{isVideo ? videoPreview : imagePreview}</div>
       </div>
 
 
