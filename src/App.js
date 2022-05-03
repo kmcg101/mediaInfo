@@ -1,24 +1,26 @@
-import logo from './logo.svg';
+// git add .
+// git remote add origin git@github.com:kmcg101/mediaInfo.git
+// git commit -m 'first commit'
+// git push origin main
+
+import React, { useEffect, useState } from 'react'
+import Dropzone from './Dropzone'
 import './App.css';
 
-function App() {
+
+function App(props) {
+  const [files, setFiles] = useState([]);
+  const [productIndex, setProductIndex] = useState(0);
+  
+  const handleAllDropzoneChanges = (name, value) =>{
+
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <section className="container">
+     
+      <Dropzone handleAllDropzoneChanges={handleAllDropzoneChanges}  productIndex={productIndex} />
+    </section>
   );
 }
 

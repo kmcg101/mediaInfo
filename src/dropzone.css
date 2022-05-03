@@ -1,0 +1,32 @@
+img, video{
+  width: auto;
+  height: 360px;
+  object-fit: contain;
+}
+.dropZone {
+    width: 640px;
+    height: 360px;
+    position: absolute;
+    object-fit: contain;
+  }
+  .droppedImageHolder{
+    object-fit: contain;
+    overflow: hidden;
+    width: 640px;
+    height: 360px;
+  }
+
+  .dropzoneImageGrandParent{
+    overflow: hidden;
+    width: 640px;
+    height: 360px;
+    object-fit: contain;
+  }
+
+  .dropzoneImageParent{
+      overflow: hidden;
+      width: 640px;
+      height: 360px;
+      
+  }
+
