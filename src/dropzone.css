@@ -29,4 +29,15 @@ img, video{
       height: 360px;
       
   }
+  table{
+    margin-left: 20px;
+  }
+  tr{
+    line-height: 1.4em;
+  }
+  .tableLabel{
+    font-weight: 800;
+    color: red;
+    
+  }
 

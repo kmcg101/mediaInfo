@@ -1,7 +1,8 @@
+// git init
 // git add .
 // git remote add origin git@github.com:kmcg101/mediaInfo.git
 // git commit -m 'first commit'
-// git push origin main
+// git push origin master
 
 import React, { useEffect, useState } from 'react'
 import Dropzone from './Dropzone'
@@ -12,14 +13,18 @@ function App(props) {
   const [files, setFiles] = useState([]);
   const [productIndex, setProductIndex] = useState(0);
   
-  const handleAllDropzoneChanges = (name, value) =>{
 
-  }
+  const handleAllDropzoneChanges = (name, value) => {
+  };
+
+
+
+
 
   return (
     <section className="container">
-     
-      <Dropzone handleAllDropzoneChanges={handleAllDropzoneChanges}  productIndex={productIndex} />
+
+      <Dropzone productIndex={productIndex} />
     </section>
   );
 }

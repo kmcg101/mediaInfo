@@ -24,9 +24,18 @@ const rejectStyle = {
 
 function Dropzone(props) {
   const [files, setFiles] = useState([]);
-  const handleDropzoneChange = (name, value) => {
-    props.handleAllDropzoneChanges(name, value);
-  };
+  const [mediaAttributes, setMediaAttributes] = useState([]);
+
+
+  
+ 
+
+  const handleAttributesChange = (name, value) => {
+    setMediaAttributes((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  }
 
   const { getRootProps, getInputProps, isDragAccept, isDragReject } =
     useDropzone({
@@ -51,14 +60,16 @@ function Dropzone(props) {
         const newFile = acceptedFiles[0];
         const newInfo = getInfo(newFile).then((result) => {
           console.log("duration = ", result.media.track[1].Duration)
-          console.log("FileSize = ", result.media.track[0].FileSize)
-          console.log("Format = ", result.media.track[0].Format)
-          console.log("Width = ", result.media.track[1].Width)
-          console.log("Height = ", result.media.track[1].Height)
-          console.log("FPS = ", result.media.track[0].FrameRate)
-          console.log("Codec = ", result.media.track[1].CodecID)
-          console.log("Aspect Ratio = ", result.media.track[1].DisplayAspectRatio)
-          console.log("Format = ", result.media.track[1].Format)
+          handleAttributesChange("Duration", result.media.track[1].Duration)
+          handleAttributesChange("FileSize", result.media.track[0].FileSize)
+          handleAttributesChange("Format",result.media.track[0].Format )
+          handleAttributesChange("Width",result.media.track[1].Width )
+          handleAttributesChange("Height", result.media.track[1].Height)
+          handleAttributesChange("FPS", result.media.track[0].FrameRate)
+          handleAttributesChange("Codec", result.media.track[1].CodecID)
+          handleAttributesChange("AspectRatio", result.media.track[1].DisplayAspectRatio)
+          handleAttributesChange("Format", result.media.track[1].Format)
+         
         })
 
       },
@@ -103,8 +114,50 @@ function Dropzone(props) {
           <input {...getInputProps()} />
         </div>
         <div className="droppedImageHolder">{videoPreview}</div>
-
       </div>
+    
+
+      <table className="resultsTable">
+        <tbody>
+        <tr>
+          <td className='tableLabel'>Width</td>
+          <td>{mediaAttributes.Width}</td>
+        </tr>
+        <tr>
+          <td className='tableLabel'>Height</td>
+          <td>{mediaAttributes.Height}</td>
+        </tr>
+        <tr>
+          <td className='tableLabel'>FileSize</td>
+          <td>{mediaAttributes.FileSize}</td>
+        </tr>
+        <tr>
+          <td className='tableLabel'>Format</td>
+          <td>{mediaAttributes.Format}</td>
+        </tr>
+        <tr>
+          <td className='tableLabel'>Duration</td>
+          <td>{mediaAttributes.Duration}</td>
+        </tr>
+        <tr>
+          <td className='tableLabel'>Codec</td>
+          <td>{mediaAttributes.Codec}</td>
+        </tr>
+        <tr>
+          <td className='tableLabel'>Aspect Ratio</td>
+          <td>{mediaAttributes.AspectRatio}</td>
+        </tr>
+        <tr >
+          <td className='tableLabel'>Format</td>
+          <td>{mediaAttributes.Format}</td>
+        </tr>
+        <tr>
+        <td className='tableLabel'>Frame Rate</td>
+        <td>{mediaAttributes.FPS}</td>
+      </tr>
+        </tbody>
+
+      </table>
     </div>
   );
 }
