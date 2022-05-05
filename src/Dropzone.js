@@ -118,7 +118,7 @@ function Dropzone(props) {
       <div className="dropzoneImageGrandParent">
       <div className="droppedImageHolder">{isVideo ? videoPreview : imagePreview}</div>
         <div {...getRootProps({ style })} className="dropZone">
-          <input {...getInputProps()} />
+          <input {...getInputProps()} />Drop mp4 here
         </div>
         
       </div>
