@@ -4,6 +4,9 @@ import { getInfo } from 'react-mediainfo'
 import "./dropzone.css";
 
 const baseStyle = {
+  position: "absolute",
+  width: "160px",
+  height: "220px",
   borderWidth: 1,
   borderRadius: 2,
   borderColor: "blue",
@@ -11,6 +14,8 @@ const baseStyle = {
   color: "#bdbdbd",
   outline: "none",
   transition: "border .24s ease-in-out",
+  left: "10px",
+  top: "570px"
 };
 const acceptStyle = {
   borderColor: "#00e676",
@@ -25,22 +30,17 @@ const rejectStyle = {
 function Dropzone(props) {
   const [files, setFiles] = useState([]);
   const [isVideo, setIsVideo] = useState([false]);
-  const [mediaAttributes, setMediaAttributes] = useState([]);
+  
 
   const handleAttributesChange = (name, value) => {
-    setMediaAttributes((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    props.handleAttributesChange(name, value);
+    
   }
 
   const { getRootProps, getInputProps, isDragAccept, isDragReject } =
     useDropzone({
       maxFiles: 1,
       accept: {
-        'image/jpeg': [],
-        'image/png': [],
-        'image/svg+xml': [],
         'video/mp4': []
       },
 
@@ -56,13 +56,18 @@ function Dropzone(props) {
         // get width and height of preview
         const newFile = acceptedFiles[0];
         const newInfo = getInfo(newFile).then((result) => {
+          console.log(result)
           const extArray = acceptedFiles[0].path.split(".")
           const ext = extArray[1]
           setIsVideo(ext==="mp4")
           handleAttributesChange("Extension", ext)
           handleAttributesChange("FileType", acceptedFiles[0].type)
+          
+          const ac= result.media.track[0].AudioCount
+          handleAttributesChange("AudioCount", ac==="1" ? 1 : 0)
+          
           handleAttributesChange("Duration", result.media.track[1].Duration)
-          handleAttributesChange("FileSize", `${result.media.track[0].FileSize/1000} kb`)
+          handleAttributesChange("FileSize", `${result.media.track[0].FileSize/1000000} MB`)
           handleAttributesChange("Format", result.media.track[0].Format)
           handleAttributesChange("Width", result.media.track[1].Width)
           handleAttributesChange("Height", result.media.track[1].Height)
@@ -109,64 +114,17 @@ function Dropzone(props) {
 
 
   return (
-    <div>
+    <div className='dropzone'>
       <div className="dropzoneImageGrandParent">
+      <div className="droppedImageHolder">{isVideo ? videoPreview : imagePreview}</div>
         <div {...getRootProps({ style })} className="dropZone">
           <input {...getInputProps()} />
         </div>
-        <div className="droppedImageHolder">{isVideo ? videoPreview : imagePreview}</div>
+        
       </div>
 
 
-      <table className="resultsTable">
-        <tbody>
-          <tr>
-            <td className='tableLabel'>Width</td>
-            <td>{mediaAttributes.Width}</td>
-          </tr>
-          <tr>
-            <td className='tableLabel'>Height</td>
-            <td>{mediaAttributes.Height}</td>
-          </tr>
-          <tr>
-            <td className='tableLabel'>FileSize</td>
-            <td>{mediaAttributes.FileSize}</td>
-          </tr>
-          <tr>
-            <td className='tableLabel'>Format</td>
-            <td>{mediaAttributes.Format}</td>
-          </tr>
-          <tr>
-            <td className='tableLabel'>Duration</td>
-            <td>{mediaAttributes.Duration}</td>
-          </tr>
-          <tr>
-            <td className='tableLabel'>Codec</td>
-            <td>{mediaAttributes.Codec}</td>
-          </tr>
-          <tr>
-            <td className='tableLabel'>Aspect Ratio</td>
-            <td>{mediaAttributes.AspectRatio}</td>
-          </tr>
-          <tr >
-            <td className='tableLabel'>Format</td>
-            <td>{mediaAttributes.Format}</td>
-          </tr>
-          <tr>
-            <td className='tableLabel'>Frame Rate</td>
-            <td>{mediaAttributes.FPS}</td>
-          </tr>
-          <tr>
-            <td className='tableLabel'>Extension</td>
-            <td>{mediaAttributes.Extension}</td>
-          </tr>
-          <tr>
-            <td className='tableLabel'>File Type</td>
-            <td>{mediaAttributes.FileType}</td>
-          </tr>
-        </tbody>
-
-      </table>
+     
     </div>
   );
 }
